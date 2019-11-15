@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const config = require('./config.js');
 const defaultNotification = require('./default-notification.js');
 
-console.log(defaultNotification);
 
 // const
 const PORT = 3000;
