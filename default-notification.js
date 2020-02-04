@@ -1,7 +1,7 @@
 module.exports = {
     notification: {
-        title: 'Opaa radi!',
-        body: 'This is the body of the notification',
-        icon: 'assets/icons/icon-512x512.png',
+        title: 'New posts on LEVI9',
+        body: 'Read new post.',
+        icon: 'https://www.levi9.com/wp-content/themes/levi9/images/logo.png',
     }
 }

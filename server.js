@@ -5,15 +5,24 @@ const bodyParser = require('body-parser');
 const config = require('./config.js');
 const defaultNotification = require('./default-notification.js');
 
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
 
-// const
-const PORT = 3000;
-const fakeDatabase = [];
+const adapter = new FileSync('./db.json')
+const db = low(adapter);
+
+
+/*
+===================
+INITIALIZATION
+===================
+*/
 
 // init app and plugins
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
 
 // set web push
 webpush.setVapidDetails(
@@ -22,44 +31,82 @@ webpush.setVapidDetails(
     config.privateKey);
 
 
+/*
+===================
+HELPER FUNCTIONS
+===================
+*/
 
-function sendNotification(res){
+function toJson(results){
+    return JSON.stringify(results);
+}
+
+
+function getNotificationsAsPromises(){
 
     const promises = [];
+    const subscribers = db.get('subscribers').value();
 
-    fakeDatabase.forEach(subscription => {
+    if(!subscribers){
+        return [];
+    }
+
+    subscribers.forEach(subscription => {
         promises.push(
             webpush.sendNotification(
                 subscription,
-                JSON.stringify(defaultNotification)
+                toJson(defaultNotification)
             )
         )
     });
 
-    Promise.all(promises).then(() => res.sendStatus(200));
+    return promises;
 
 }
 
 
+function saveSubscriber(subscription){
+    db.get('subscribers').push(subscription).write();
+    return { status: 'ok' };
+}
 
+
+/*
+===================
+ROUTES
+===================
+*/
 
 // register routes
-app.listen(PORT, () => {
-    console.log('Listening on port ' + PORT);
+app.listen(config.PORT, () => {
+    console.log('Listening on port ' + config.PORT);
 });
 
 app.get('/', (req, res) => {
-
+    res.end(toJson({title: 'Push Notifications Server'}));
 });
 
 app.post('/subscription', (req, res) => {
     const subscription = req.body;
-    fakeDatabase.push(subscription);
-    console.log({
-        totalSubscribed: fakeDatabase.length
-    });
+    const newsubscriber = saveSubscriber(subscription);
+    res.end(toJson(newsubscriber));
 });
 
-app.post('/sendNotification', (req, res) => {
-    sendNotification(res);
+app.get('/subscribers', (req, res) => {
+    const subscribers = db.get('subscribers').value();
+    res.end(toJson(subscribers));
 });
+
+
+// send notification
+app.post('/sendNotification', (req, res) => {
+    const promises = getNotificationsAsPromises(res);
+    let response = toJson({status: 'ok'});
+
+    if(!promises.length){
+        res.end(response)
+    }
+    Promise.all(promises).then(() => res.end(response));
+});
+
+
