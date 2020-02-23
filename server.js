@@ -70,6 +70,11 @@ function saveSubscriber(subscription){
     return { status: 'ok' };
 }
 
+function saveNews(news){
+    db.get('news').push(news).write();
+    return { status: 'ok' };
+}
+
 
 /*
 ===================
@@ -95,6 +100,18 @@ app.post('/subscription', (req, res) => {
 app.get('/subscribers', (req, res) => {
     const subscribers = db.get('subscribers').value();
     res.end(toJson(subscribers));
+});
+
+// news
+app.get('/news', (req, res) => {
+    const news = db.get('news').value();
+    res.end(toJson(news));
+});
+
+app.post('/news', (req, res) => {
+    const news = req.body;
+    const newsSaved = saveNews(news);
+    res.end(toJson(newsSaved));
 });
 
 
