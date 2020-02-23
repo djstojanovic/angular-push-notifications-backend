@@ -5,10 +5,10 @@ const bodyParser = require('body-parser');
 const config = require('./config.js');
 const defaultNotification = require('./default-notification.js');
 
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
-const adapter = new FileSync('./db.json')
+const adapter = new FileSync('./db.json');
 const db = low(adapter);
 
 
@@ -66,6 +66,13 @@ function getNotificationsAsPromises(){
 
 
 function saveSubscriber(subscription){
+    const subscribers = db.get('subscribers').value();
+    const isAdded = subscribers.filter(function(item){
+        return item.endpoint === subscription.endpoint;
+    })[0];
+    if(isAdded){
+        return {status: 'error', message: 'subscriber is allready added'}
+    }
     db.get('subscribers').push(subscription).write();
     return { status: 'ok' };
 }
