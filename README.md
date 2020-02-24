@@ -12,5 +12,5 @@ run `npm add -g  web-push`
 
 run `web-push generate-vapid-keys --json`
 
-Save keys in config file. Keep private key only in backend.
-Public key will be needed in Frontend of your app.
+Save keys in config file. Keep private key only in the backend.
+Public key needs to be added in the frontend.

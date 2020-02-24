@@ -71,7 +71,7 @@ function saveSubscriber(subscription){
         return item.endpoint === subscription.endpoint;
     })[0];
     if(isAdded){
-        return {status: 'error', message: 'subscriber is allready added'}
+        return {status: 'error', message: 'Subscriber is already added.'}
     }
     db.get('subscribers').push(subscription).write();
     return { status: 'ok' };
