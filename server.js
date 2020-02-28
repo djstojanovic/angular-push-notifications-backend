@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 // set web push
 webpush.setVapidDetails(
-    'mailto: djordje100janovic@gmail.com',
+    'mailto: <your-email>',
     config.publicKey,
     config.privateKey);
 
