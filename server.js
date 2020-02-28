@@ -41,6 +41,13 @@ function toJson(results){
     return JSON.stringify(results);
 }
 
+function createNotificationPromise(subscription){
+    return webpush.sendNotification(
+        subscription,
+        toJson(defaultNotification)
+    )
+}
+
 
 function getNotificationsAsPromises(){
 
@@ -130,7 +137,7 @@ app.post('/sendNotification', (req, res) => {
     if(!promises.length){
         res.end(response)
     }
-    Promise.all(promises).then(() => res.end(response));
+    Promise.all(promises).then(() => res.end(response)).catch(err => console.log(err));
 });
 
 

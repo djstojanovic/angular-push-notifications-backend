@@ -1,20 +1,6 @@
 {
   "subscribers": [
-    {
-      "endpoint": "https://fcm.googleapis.com/fcm/send/eaiyxUWogXg:APA91bGaWRxqQ-7IkGGWAv92ufEOyjob1SaRDVuzeOAjsdt86C8GVakbzxCut07SuhssJh6X8yoRiriWjTTJFsQBTbipNbXb-sM9BYOOnlylryk0e9wTi6-u4bwrgvbQMEjxN9h4xpNN",
-      "expirationTime": null,
-      "keys": {
-        "p256dh": "BGWglwNx7S39jSotMcS8Uq1GKEOkvRk8RiaCBp5wkVZaw7qo4IobFKvjMcTqdK3DixO0tyxzloHylmo22EkdGAA",
-        "auth": "GYnrTv8cRza29IICEB2xDg"
-      }
-    },
-    {
-      "endpoint": "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABeTFEHqus0QGh8G51ObElaa9w4e3lEl-wXpMWbdXN1qT52DcvVwcOX-q8zYkUYr3ZCSmvT3RBmUG0Rd9lz3XxcoGUNI29HiaTDjOja1PLXl1HHtzD2L1bxdpsCUPHFaKMYwdGNfDYFXdaLA1fhs8ZoQ2DEtqT72xeIS6Vbl7WI3iqWOsY",
-      "keys": {
-        "auth": "yPc_T4AdtboooZbets3waQ",
-        "p256dh": "BL5MwqjkP1Xrj3BpGUxLLwl-E7brmeOXYOQ7aWK4291BVd5FY7xDrHRUF1HY9H0HbcEgESQU_KVn5BhFvz8Fx0I"
-      }
-    }
+    
   ],
   "news": [
     {
